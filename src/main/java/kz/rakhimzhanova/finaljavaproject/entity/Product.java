@@ -1,7 +1,8 @@
 package kz.rakhimzhanova.finaljavaproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
+        import lombok.Getter;
 import lombok.Setter;
 
 @Entity
@@ -19,4 +20,9 @@ public class Product {
     private Double price;
 
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonIgnore
+    private Category category;
 }
