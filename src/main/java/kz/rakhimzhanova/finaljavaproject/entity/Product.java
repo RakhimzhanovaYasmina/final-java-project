@@ -1,8 +1,8 @@
 package kz.rakhimzhanova.finaljavaproject.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-        import lombok.Getter;
+import lombok.Getter;
 import lombok.Setter;
 
 @Entity
@@ -23,6 +23,6 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonIgnore
+    @JsonBackReference
     private Category category;
 }
