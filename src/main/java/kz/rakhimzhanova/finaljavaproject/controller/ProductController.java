@@ -1,5 +1,6 @@
 package kz.rakhimzhanova.finaljavaproject.controller;
 
+import jakarta.validation.Valid;
 import kz.rakhimzhanova.finaljavaproject.entity.Product;
 import kz.rakhimzhanova.finaljavaproject.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -21,26 +22,26 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+    @PostMapping
+    public Product createProduct(@Valid @RequestBody Product product) {
+        return productService.createProduct(product);
     }
 
     @PutMapping("/{id}")
     public Product updateProduct(
             @PathVariable Long id,
-            @RequestBody Product product
+            @Valid @RequestBody Product product
     ) {
         return productService.updateProduct(id, product);
     }
 
-    @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
-        return productService.getProductById(id);
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
     }
 }
