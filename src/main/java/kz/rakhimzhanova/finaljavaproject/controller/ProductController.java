@@ -38,4 +38,9 @@ public class ProductController {
     ) {
         return productService.updateProduct(id, product);
     }
+
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
+    }
 }
