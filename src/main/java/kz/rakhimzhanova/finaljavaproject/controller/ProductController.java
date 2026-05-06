@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import kz.rakhimzhanova.finaljavaproject.entity.Product;
 import kz.rakhimzhanova.finaljavaproject.service.ProductService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -43,5 +44,27 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
+    }
+
+    @GetMapping("/paged")
+    public Page<Product> getProductsWithPagination(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id") String sortBy
+    ) {
+
+        return productService.getProductsWithPagination(
+                page,
+                size,
+                sortBy
+        );
+    }
+
+    @GetMapping("/search")
+    public List<Product> searchProducts(
+            @RequestParam String title
+    ) {
+
+        return productService.searchProductsByTitle(title);
     }
 }

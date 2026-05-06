@@ -3,7 +3,11 @@ package kz.rakhimzhanova.finaljavaproject.service;
 import kz.rakhimzhanova.finaljavaproject.entity.Product;
 import kz.rakhimzhanova.finaljavaproject.repository.ProductRepository;
 import org.springframework.stereotype.Service;
-
+import kz.rakhimzhanova.finaljavaproject.exception.ResourceNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import java.util.List;
 
 @Service
@@ -41,6 +45,29 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Product not found with id " + id
+                        )
+                );
+    }
+
+    public Page<Product> getProductsWithPagination(
+            int page,
+            int size,
+            String sortBy
+    ) {
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(sortBy)
+        );
+
+        return productRepository.findAll(pageable);
+    }
+
+    public List<Product> searchProductsByTitle(String title) {
+        return productRepository.findByTitleContainingIgnoreCase(title);
     }
 }
