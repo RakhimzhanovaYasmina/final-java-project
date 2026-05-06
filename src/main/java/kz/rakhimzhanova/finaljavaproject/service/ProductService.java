@@ -22,4 +22,20 @@ public class ProductService {
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
+
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    public Product updateProduct(Long id, Product updatedProduct) {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow();
+
+        product.setTitle(updatedProduct.getTitle());
+        product.setPrice(updatedProduct.getPrice());
+        product.setDescription(updatedProduct.getDescription());
+
+        return productRepository.save(product);
+    }
 }
