@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>VOGUE Store</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            scroll-behavior:smooth;
+        }
+
+        body{
+            font-family:'Inter',sans-serif;
+            background:#f7f7f7;
+            color:#111;
+        }
+
+        .navbar{
+
+            position:fixed;
+
+            top:0;
+            left:0;
+
+            width:100%;
+
+            background:white;
+
+            display:flex;
+
+            justify-content:space-between;
+            align-items:center;
+
+            padding:25px 80px;
+
+            z-index:1000;
+
+            box-shadow:0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo{
+
+            font-size:38px;
+
+            font-weight:800;
+
+            letter-spacing:4px;
+        }
+
+        nav{
+
+            display:flex;
+
+            gap:40px;
+        }
+
+        nav a{
+
+            text-decoration:none;
+
+            color:#111;
+
+            font-weight:600;
+        }
+
+        .hero{
+
+            height:100vh;
+
+            background:
+                    linear-gradient(rgba(255,255,255,0.35),
+                    rgba(255,255,255,0.35)),
+
+                    url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1400');
+
+            background-size:cover;
+            background-position:center;
+
+            display:flex;
+
+            justify-content:center;
+            align-items:center;
+
+            text-align:center;
+        }
+
+        .hero-content h1{
+
+            font-size:90px;
+
+            margin-bottom:20px;
+        }
+
+        .hero-content p{
+
+            font-size:24px;
+
+            color:#444;
+
+            margin-bottom:35px;
+        }
+
+        #searchInput{
+
+            width:420px;
+
+            padding:18px;
+
+            border:none;
+
+            border-radius:50px;
+
+            outline:none;
+
+            font-size:16px;
+        }
+
+        .main{
+
+            display:flex;
+
+            gap:40px;
+
+            padding:80px;
+        }
+
+        .products-section{
+
+            flex:3;
+        }
+
+        .section-title{
+
+            font-size:52px;
+
+            margin-bottom:40px;
+        }
+
+        .products-grid{
+
+            display:grid;
+
+            grid-template-columns:
+                    repeat(auto-fill,minmax(320px,1fr));
+
+            gap:35px;
+        }
+
+        .product-card{
+
+            background:white;
+
+            border-radius:28px;
+
+            overflow:hidden;
+
+            box-shadow:0 5px 20px rgba(0,0,0,0.05);
+
+            transition:0.3s;
+
+            display:flex;
+
+            flex-direction:column;
+        }
+
+        .product-card:hover{
+
+            transform:translateY(-8px);
+        }
+
+        .product-image{
+
+            width:100%;
+
+            height:400px;
+
+            object-fit:cover;
+        }
+
+        .product-info{
+
+            padding:25px;
+
+            display:flex;
+
+            flex-direction:column;
+
+            flex:1;
+        }
+
+        .product-title{
+
+            font-size:30px;
+
+            margin-bottom:12px;
+        }
+
+        .product-description{
+
+            color:#666;
+
+            line-height:1.6;
+
+            margin-bottom:20px;
+        }
+
+        .product-price{
+
+            font-size:34px;
+
+            font-weight:800;
+
+            margin-bottom:20px;
+        }
+
+        .product-buttons{
+
+            margin-top:auto;
+        }
+
+        .add-btn{
+
+            width:100%;
+
+            border:none;
+
+            background:#111;
+
+            color:white;
+
+            padding:16px;
+
+            border-radius:14px;
+
+            font-weight:600;
+
+            cursor:pointer;
+        }
+
+        .cart{
+
+            flex:1;
+
+            background:white;
+
+            border-radius:30px;
+
+            padding:35px;
+
+            height:fit-content;
+
+            position:sticky;
+
+            top:120px;
+
+            box-shadow:0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .cart h2{
+
+            font-size:40px;
+
+            margin-bottom:25px;
+        }
+
+        .cart-item{
+
+            padding:18px 0;
+
+            border-bottom:1px solid #eee;
+        }
+
+        .remove-btn{
+
+            margin-top:10px;
+
+            border:none;
+
+            background:#f1f1f1;
+
+            padding:10px 14px;
+
+            border-radius:10px;
+
+            cursor:pointer;
+        }
+
+        .cart-total{
+
+            margin-top:30px;
+
+            font-size:34px;
+
+            font-weight:800;
+        }
+
+        #customerName{
+
+            width:100%;
+
+            margin-top:25px;
+
+            padding:18px;
+
+            border:1px solid #ddd;
+
+            border-radius:14px;
+
+            outline:none;
+        }
+
+        .checkout-btn{
+
+            width:100%;
+
+            margin-top:15px;
+
+            border:none;
+
+            background:#111;
+
+            color:white;
+
+            padding:18px;
+
+            border-radius:14px;
+
+            font-weight:600;
+
+            cursor:pointer;
+        }
+
+        .admin-section{
+
+            background:white;
+
+            margin:80px;
+
+            padding:50px;
+
+            border-radius:30px;
+
+            box-shadow:0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .admin-title{
+
+            font-size:48px;
+
+            margin-bottom:30px;
+        }
+
+        .admin-form{
+
+            display:grid;
+
+            gap:18px;
+        }
+
+        .admin-form input{
+
+            padding:18px;
+
+            border:1px solid #ddd;
+
+            border-radius:14px;
+
+            outline:none;
+        }
+
+        .admin-btn{
+
+            border:none;
+
+            background:#111;
+
+            color:white;
+
+            padding:18px;
+
+            border-radius:14px;
+
+            font-weight:600;
+
+            cursor:pointer;
+        }
+
+        footer{
+
+            margin-top:100px;
+
+            background:#111;
+
+            color:white;
+
+            text-align:center;
+
+            padding:40px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        VOGUE
+    </div>
+
+    <nav>
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#shop">
+            Shop
+        </a>
+
+        <a href="#cart">
+            Cart
+        </a>
+
+        <a href="#admin">
+            Admin
+        </a>
+
+    </nav>
+
+</header>
+
+<section
+        class="hero"
+        id="home">
+
+    <div class="hero-content">
+
+        <h1>
+            New Season Collection
+        </h1>
+
+        <p>
+            Modern fashion ecommerce store
+        </p>
+
+        <input
+                type="text"
+                id="searchInput"
+                placeholder="Search products..."
+        >
+
+    </div>
+    <hr style="
+    margin:20px 0;
+    border:none;
+    border-top:1px solid #ddd;
+">
+
+
+
+</section>
+
+<section
+        class="main"
+        id="shop">
+
+    <div class="products-section">
+
+        <h2 class="section-title">
+            Trending Products
+        </h2>
+
+        <div
+                class="products-grid"
+                id="productsContainer">
+
+        </div>
+
+    </div>
+
+    <aside
+            class="cart"
+            id="cart">
+
+        <h2>
+            Cart
+        </h2>
+
+        <div id="cartItems"></div>
+
+        <div
+                class="cart-total"
+                id="cartTotal">
+
+            Total: $0.00
+
+        </div>
+
+        <input
+                type="text"
+                id="customerName"
+                placeholder="Enter your name"
+        >
+
+        <button
+                class="checkout-btn"
+                onclick="checkout()">
+
+            Checkout
+
+        </button>
+
+    </aside>
+
+</section>
+
+<section
+        class="admin-section"
+        id="admin">
+
+    <h2 class="admin-title">
+        Admin Panel
+    </h2>
+
+    <div class="admin-form">
+
+        <input
+                type="text"
+                id="newTitle"
+                placeholder="Product title"
+        >
+
+        <input
+                type="text"
+                id="newDescription"
+                placeholder="Product description"
+        >
+
+        <input
+                type="number"
+                id="newPrice"
+                placeholder="Product price"
+        >
+
+        <button
+                class="admin-btn"
+                onclick="createProduct()">
+
+            Add Product
+
+        </button>
+
+        <input
+                type="number"
+                id="deleteId"
+                placeholder="Product ID to delete"
+        >
+
+        <button
+                class="admin-btn"
+                onclick="deleteAdminProduct()">
+
+            Delete Product
+
+        </button>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <h3>
+        VOGUE Fashion Store
+    </h3>
+
+    <p style="margin-top:10px;">
+        Spring Boot Ecommerce Final Project
+    </p>
+
+</footer>
+
+<script src="/js/script.js"></script>
+
+</body>
+
+</html>
